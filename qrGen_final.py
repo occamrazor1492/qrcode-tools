@@ -143,9 +143,16 @@ class qrcodeGUI(QtWidgets.QWidget):
         draw = ImageDraw.Draw(background)
         # chalk = ImageFont.truetype("Keyboard.ttf", 22)
         # image_font = ImageFont.load_default()
-        spu, color, size = self.content_edit.text().upper().split('-')
+
+        content_array = self.content_edit.text().upper().split('-')
+        spu = content_array[0]
         draw.text((15, 70), spu, (0, 0, 0), font=image_font)
-        draw.text((15, 95), color + '-' + size, (0, 0, 0), font=image_font)
+        if len(content_array)>1:
+            content_array.pop(0)
+            second_line_string = "-".join(content_array)
+            draw.text((15, 95), second_line_string, (0, 0, 0), font=image_font)
+
+
         qr = self.qr_img
         background.paste(qr, (20, 5))
         rotate_backgroud = background.rotate(-90, expand=True)
@@ -156,11 +163,12 @@ class qrcodeGUI(QtWidgets.QWidget):
         #                                        # '所有文件(*)')
         filename = qrCodeDir + '/' + self.content_edit.text().upper() + '.png'
         rotate_backgroud.save(filename)
-        
-        try:
-            os.startfile(filename, "print")
-        except Exception as e:
-            raise
+
+        if platform == "win32":
+            try:
+                os.startfile(filename, "print")
+            except Exception as e:
+                raise
 
         if os.path.exists(filename):
             # self.show_SUCCESS_message()
