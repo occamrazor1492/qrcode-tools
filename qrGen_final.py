@@ -146,15 +146,15 @@ class qrcodeGUI(QtWidgets.QWidget):
 
         content_array = self.content_edit.text().upper().split('-')
         spu = content_array[0]
-        draw.text((15, 70), spu, (0, 0, 0), font=image_font)
+        draw.text((30, 70), spu, (0, 0, 0), font=image_font)
         if len(content_array)>1:
             content_array.pop(0)
             second_line_string = "-".join(content_array)
-            draw.text((15, 95), second_line_string, (0, 0, 0), font=image_font)
+            draw.text((30, 95), second_line_string, (0, 0, 0), font=image_font)
 
 
         qr = self.qr_img
-        background.paste(qr, (20, 5))
+        background.paste(qr, (30, 10))
         rotate_backgroud = background.rotate(-90, expand=True)
         # rotate_backgroud.save(self.content_edit.text().upper() + '-' + self.color_content_edit.text().upper() +'.png')
 
